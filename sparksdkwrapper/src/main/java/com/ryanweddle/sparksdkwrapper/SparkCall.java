@@ -150,6 +150,7 @@ public class SparkCall extends AppCompatActivity implements CallObserver {
     public void onDisconnected(CallDisconnectedEvent event) {
         dismissWithToast("Call Disconnected");
         hideButtonGroup();
+        finish();
     }
 
     @Override
