@@ -26,6 +26,7 @@ Intent intent = new Intent(MainActivity.this, SparkCall.class);
 intent.putExtra(SparkCall.INTENT_CALLEE, mCallEdit.getText().toString());
 intent.putExtra(SparkCall.INTENT_JWT, mTokenEdit.getText().toString());
 
+startActivity(intent);
 ```
 
 In this example, the call is started based on the contents of two EditText fields.  Just modify with your token and the SparkID to call and you are all set and ready to go!
