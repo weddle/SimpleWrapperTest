@@ -1,6 +1,6 @@
 # Spark Android SDK Wrapper
 
-## Embed video calling capabilities into your Android App in just a few lines of code using the Cisco Spark SDK with this wrapper.
+## Embed video calling capabilities into your Android App in just a few lines of code
 
 This Simple Test application demonstrates the Spark Android SDK Wrapper.
 
