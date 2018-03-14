@@ -146,7 +146,7 @@ public class SparkCall extends AppCompatActivity implements CallObserver {
 
     @Override
     public void onRinging(Call call) {
-       toast("Ringing");
+        toast("Ringing");
     }
 
     @Override
