@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mCallEdit;
     private EditText mTokenEdit;
 
-    public static final String CLASS_TAG = "MainActivity";
+    public static final String  CLASS_TAG = "MainActivity";
 
 
     @Override

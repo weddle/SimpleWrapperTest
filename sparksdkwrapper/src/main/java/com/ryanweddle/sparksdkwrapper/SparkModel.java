@@ -32,6 +32,7 @@ class SparkModel implements CallObserver {
     private CallObserver mObserver;
 
     private boolean mRegState = false;
+    private boolean mFrontCam = true;
 
 
 
@@ -179,6 +180,31 @@ class SparkModel implements CallObserver {
             mActiveCall.setSendingAudio(sending);
         }
     }
+
+    public void setCameraFacing(boolean frontCam) {
+        if(frontCam)
+            setCamUser();
+        else
+            setCamBack();
+    }
+
+    public boolean getCameraFacing() {
+        return mFrontCam;
+    }
+
+    public void setCamUser() {
+        mFrontCam = true;
+        if (mActiveCall != null)
+            mActiveCall.setFacingMode(Phone.FacingMode.USER);
+    }
+
+    public void setCamBack() {
+        mFrontCam = false;
+        if(mActiveCall != null)
+            mActiveCall.setFacingMode(Phone.FacingMode.ENVIROMENT);
+    }
+
+
 
     public void acknowledge(CompletionHandler<Void> callback) {
         if(mActiveCall != null) {

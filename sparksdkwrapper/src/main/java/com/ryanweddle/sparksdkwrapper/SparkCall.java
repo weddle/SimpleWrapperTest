@@ -21,8 +21,8 @@ public class SparkCall extends AppCompatActivity implements CallObserver {
 
 
     public static final String CLASS_TAG = "SparkCall";
-    public static final String INTENT_CALLEE = "com.ryanweddle.simplesparkapp.CALLEE_ID";
-    public static final String INTENT_JWT = "com.ryanweddle.simplesparkapp.CALLEE_JWT";
+    public static final String INTENT_CALLEE = "com.ryanweddle.sparksdkwrapper.CALLEE_ID";
+    public static final String INTENT_JWT = "com.ryanweddle.sparksdkwrapper.CALLEE_JWT";
 
     private SparkModel mSparkModel;
     private View mRemoteView;
@@ -32,9 +32,11 @@ public class SparkCall extends AppCompatActivity implements CallObserver {
     private MediaOption mMedia;
     private ImageButton mButtonMute;
     private ImageButton mButtonHangup;
+    private ImageButton mButtonRotate;
     private ConstraintLayout mButtonGroup;
 
     private boolean mSendingAudio = false;
+    private boolean mFrontCamSelected = true;
 
     private ProgressDialog mProgress = null;
 
@@ -53,9 +55,11 @@ public class SparkCall extends AppCompatActivity implements CallObserver {
         mLocalView = findViewById(R.id.view_calllocal);
         mRemoteView = findViewById(R.id.view_callremote);
 
+        mButtonRotate = findViewById(R.id.button_rotate);
         mButtonHangup = findViewById(R.id.button_hangup);
         mButtonMute = findViewById(R.id.button_mute);
         mButtonGroup = findViewById(R.id.group_buttons);
+
 
         handleIntent();
 
@@ -77,13 +81,19 @@ public class SparkCall extends AppCompatActivity implements CallObserver {
             doMute();
         });
 
+        mButtonRotate.setOnClickListener(view -> {
+            doRotate();
+        });
+
         if(!mSparkModel.isInCall()) {
             mSendingAudio = true;
             hideButtonGroup(); // don't show button group until we are in call
             placeCall();
         } else {
             mSendingAudio = mSparkModel.isSendingAudio();
-            setMuteButtonView();
+            mFrontCamSelected = mSparkModel.getCameraFacing();
+            setButtonViews();
+            // setMuteButtonView();
         }
 
     }
@@ -188,11 +198,31 @@ public class SparkCall extends AppCompatActivity implements CallObserver {
         setMuteButtonView();
     }
 
+    protected void doRotate() {
+
+        mFrontCamSelected = !mSparkModel.getCameraFacing();
+        mSparkModel.setCameraFacing(mFrontCamSelected);
+        setRotateButtonView();
+    }
+
+
+    protected void setButtonViews() {
+        setMuteButtonView();
+        setRotateButtonView();
+    }
+
     protected void setMuteButtonView() {
         if(mSendingAudio)
             mButtonMute.setImageResource(R.drawable.mute3x);
         else
             mButtonMute.setImageResource(R.drawable.muteactive3x);
+    }
+
+    protected void setRotateButtonView() {
+        if(mFrontCamSelected)
+            mButtonRotate.setImageResource(R.drawable.rotate3x);
+        else
+            mButtonRotate.setImageResource(R.drawable.rotatective3x);
     }
 
     protected void hideButtonGroup() {
